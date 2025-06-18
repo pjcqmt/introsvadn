@@ -71,4 +71,62 @@ export function formatSequenceWithNumbers(sequence: string): string {
       return `${position} ${chunk}`;
     })
     .join('\n');
+}
+
+export function formatSequenceWithColoring(sequence: string): string {
+  const cleanedSequence = cleanSequence(sequence);
+  const chunks: string[] = [];
+  const chunkSize = 10;
+  
+  // Find start and stop codons
+  const startCodonIndex = findFirstATG(cleanedSequence);
+  const stopCodons = ['TGA', 'TAA', 'TAG'];
+  let stopCodonIndex = -1;
+  let stopCodonFound = '';
+  
+  if (startCodonIndex !== -1) {
+    // Look for stop codons only after the start codon
+    const codingSequence = cleanedSequence.substring(startCodonIndex);
+    for (const stopCodon of stopCodons) {
+      const index = codingSequence.indexOf(stopCodon);
+      if (index !== -1 && (stopCodonIndex === -1 || index < stopCodonIndex)) {
+        stopCodonIndex = index;
+        stopCodonFound = stopCodon;
+      }
+    }
+    if (stopCodonIndex !== -1) {
+      stopCodonIndex += startCodonIndex; // Adjust index relative to full sequence
+    }
+  }
+
+  // Split sequence into chunks and add HTML coloring
+  for (let i = 0; i < cleanedSequence.length; i += chunkSize) {
+    let chunk = '';
+    for (let j = 0; j < chunkSize && i + j < cleanedSequence.length; j++) {
+      const currentPos = i + j;
+      
+      if (currentPos === startCodonIndex) {
+        chunk += '<span class="text-green-600 font-bold">ATG</span>';
+        j += 2; // Skip next 2 characters as they're part of ATG
+      } else if (currentPos === stopCodonIndex) {
+        chunk += `<span class="text-red-600 font-bold">${stopCodonFound}</span>`;
+        j += 2; // Skip next 2 characters as they're part of the stop codon
+      } else if (currentPos > startCodonIndex && currentPos < stopCodonIndex) {
+        chunk += `<span class="text-blue-600">${cleanedSequence[currentPos]}</span>`;
+      } else if (currentPos < startCodonIndex || (stopCodonIndex !== -1 && currentPos > stopCodonIndex + 2)) {
+        chunk += cleanedSequence[currentPos];
+      } else {
+        chunk += cleanedSequence[currentPos];
+      }
+    }
+    chunks.push(chunk);
+  }
+  
+  // Format each line with chunk and position number
+  return chunks
+    .map((chunk, index) => {
+      const position = (index * chunkSize + 1).toString().padStart(3, ' ');
+      return `${position} ${chunk}`;
+    })
+    .join('\n');
 } 
