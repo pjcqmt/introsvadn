@@ -114,6 +114,13 @@ export default function Home() {
   return (
     <div className="min-h-screen p-8 bg-gray-50">
       <h1 className="text-3xl font-bold text-center mb-8">DNA Analysis Tool</h1>
+      
+      {/* Navigation */}
+      <div className="mb-6 text-center">
+        <a href="/pedigree" className="text-blue-600 hover:text-blue-800 mr-4">Diagramme de pedigree</a>
+        <a href="/phylogeny" className="text-blue-600 hover:text-blue-800">Arbre phylogénétique (UPGMA) →</a>
+      </div>
+      
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">Enter DNA Sequence:</label>
