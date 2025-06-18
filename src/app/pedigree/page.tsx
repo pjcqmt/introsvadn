@@ -26,87 +26,13 @@ import CustomNode from '../ai-pedigree/CustomNode';
 
 interface NodeData {
   gender?: 'male' | 'female';
-  isCouple?: boolean;
   name?: string;
   conditions: string[];
 }
 
 // Custom node components
-const SingleNode = ({ data, selected }: { data: NodeData; selected: boolean }) => {
-  const shape = data.gender === 'male' ? 'square' : 'circle';
-  
-  return (
-    <div className="relative">
-      <Handle
-        type="target"
-        position={Position.Top}
-        className="w-2 h-2 !bg-black"
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        className="w-2 h-2 !bg-black"
-      />
-      <Handle
-        type="source"
-        position={Position.Left}
-        id="marriage-left"
-        className="w-2 h-2 !bg-black"
-      />
-      <Handle
-        type="target"
-        position={Position.Right}
-        id="marriage-right"
-        className="w-2 h-2 !bg-black"
-      />
-      <div
-        className={`
-          w-12 h-12 flex items-center justify-center bg-white
-          ${shape === 'square' ? 'border-2 border-black' : 'rounded-full border-2 border-black'}
-          ${selected ? 'ring-2 ring-blue-500' : ''}
-        `}
-      >
-        {getConditionMarkers(data.conditions)}
-      </div>
-      {data.name && (
-        <div className="absolute top-full -left-2 text-sm">
-          {data.name}
-        </div>
-      )}
-    </div>
-  );
-};
 
-const CoupleNode = ({ data, selected }: { data: NodeData; selected: boolean }) => {
-  const nodeId = `${toRomanNumeral(data.generation)}-${data.positionInGeneration}`;
-  
-  return (
-    <div className="relative">
-      <Handle
-        type="target"
-        position={Position.Top}
-        className="w-2 h-2 !bg-black"
-      />
-      <Handle
-        type="source"
-        position={Position.Bottom}
-        className="w-2 h-2 !bg-black"
-      />
-      <div className="flex items-center gap-4">
-        <div className={`w-12 h-12 border-2 border-black flex items-center justify-center bg-white ${selected ? 'ring-2 ring-blue-500' : ''}`}>♂</div>
-        <div className={`w-12 h-12 rounded-full border-2 border-black flex items-center justify-center bg-white ${selected ? 'ring-2 ring-blue-500' : ''}`}>♀</div>
-      </div>
-      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-mono">
-        {nodeId}
-      </div>
-      {data.name && (
-        <div className="absolute top-full -left-2 text-sm">
-          {data.name}
-        </div>
-      )}
-    </div>
-  );
-};
+
 
 const GridLineNode = ({ data }: { data: { label: string } }) => (
   <div className="absolute left-0 right-0 border-t-2 border-gray-200 pointer-events-none">
@@ -130,8 +56,6 @@ const ConditionNode = ({ data }: { data: { id: string; conditionId: string } }) 
 };
 
 const nodeTypes = {
-  single: SingleNode,
-  couple: CoupleNode,
   gridLine: GridLineNode,
   condition: ConditionNode,
   default: (props: any) => (
@@ -597,16 +521,7 @@ export default function PedigreePage() {
                 >
                   ♀
                 </div>
-                <div
-                  className="flex items-center gap-2 cursor-move bg-white hover:bg-gray-50 p-1"
-                  draggable
-                  onDragStart={(e) => {
-                    e.dataTransfer.setData('application/nodeType', 'couple');
-                  }}
-                >
-                  <div className="w-12 h-12 border-2 border-black flex items-center justify-center">♂</div>
-                  <div className="w-12 h-12 rounded-full border-2 border-black flex items-center justify-center">♀</div>
-                </div>
+
               </div>
             </div>
           </div>
