@@ -118,7 +118,8 @@ export default function Home() {
       {/* Navigation */}
       <div className="mb-6 text-center">
         <a href="/pedigree" className="text-blue-600 hover:text-blue-800 mr-4">Diagramme de pedigree</a>
-        <a href="/phylogeny" className="text-blue-600 hover:text-blue-800">Arbre phylogénétique (UPGMA) →</a>
+        <a href="/phylogeny" className="text-blue-600 hover:text-blue-800 mr-4">Arbre phylogénétique (UPGMA)</a>
+        <a href="/prompt-maker" className="text-blue-600 hover:text-blue-800">Générateur de Prompts →</a>
       </div>
       
       <div className="max-w-4xl mx-auto">
