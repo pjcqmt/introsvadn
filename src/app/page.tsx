@@ -128,7 +128,10 @@ export default function Home() {
         <a href="/pedigree" className="text-blue-600 hover:text-blue-800">Diagramme de pedigree</a>
         <a href="/phylogeny" className="text-blue-600 hover:text-blue-800">Arbre phylogénétique (UPGMA)</a>
         <a href="/prompt-maker" className="text-blue-600 hover:text-blue-800">Générateur de Prompts</a>
-        <a href="/pedigree-prompt" className="text-blue-600 hover:text-blue-800">Prompts Pedigree →</a>
+        <a href="/pedigree-prompt" className="text-blue-600 hover:text-blue-800">Prompts Pedigree</a>
+        <a href="/prader-willi" className="text-blue-600 hover:text-blue-800">Syndrome de Prader-Willi</a>
+        <a href="/angelman" className="text-blue-600 hover:text-blue-800">Syndrome d'Angelman</a>
+        <a href="/transmission-genetique" className="text-blue-600 hover:text-blue-800">Types de transmission génétique</a>
       </div>
       
       <div className="max-w-4xl mx-auto">
